@@ -1,0 +1,6 @@
+/build
+/export/*
+/logs/*
+/vendor
+/.idea
+!*.gitkeep

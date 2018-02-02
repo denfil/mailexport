@@ -1,0 +1,28 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Aura\Di\ContainerBuilder;
+use MailExport\ContainerConfig;
+use MailExport\Map;
+use MailExport\Pipeline;
+
+$di = (new ContainerBuilder())->newConfiguredInstance(
+    [ContainerConfig::class],
+    ContainerBuilder::AUTO_RESOLVE
+);
+$config = $di->get('config');
+$pipeline = $di->newInstance(Pipeline::class);
+$pipeline
+    ->pipe($di->get('pipe_connect'))
+    ->pipe($di->get('pipe_select'))
+    ->pipe($di->get('pipe_download'));
+if ($config->delete) {
+    $pipeline->pipe($di->get('pipe_delete'));
+}
+$pipeline->pipe($di->get('pipe_disconnect'));
+if ($config->archive) {
+    $pipeline->pipe($di->get('pipe_archive'));
+}
+$pipeline->process($di->newInstance(Map::class));

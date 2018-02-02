@@ -1,0 +1,53 @@
+{
+    "name": "denfil/mailexport",
+    "description": "PHP CLI script to export mail.",
+    "type": "project",
+    "keywords": [
+        "mail",
+        "export",
+        "imap"
+    ],
+    "homepage": "https://github.com/denfil/mailexport",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Denis Filimonov",
+            "email": "denis@fdesign.ru",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "ext-imap": "*",
+        "ext-mbstring": "*",
+        "psr/log": "^1.0",
+        "aura/di": "^3.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "MailExport\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MailExport\\": "tests/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "7.0"
+        },
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "test": "phpunit",
+        "check-style": "phpcs -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests",
+        "fix-style": "phpcbf -p --standard=PSR2 --runtime-set ignore_errors_on_exit 1 --runtime-set ignore_warnings_on_exit 1 src tests"
+    },
+    "bin": [
+        "bin/mailexport"
+    ]
+}
