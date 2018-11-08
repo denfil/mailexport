@@ -3,4 +3,5 @@
 /logs/*
 /vendor
 /.idea
+/.env
 !*.gitkeep

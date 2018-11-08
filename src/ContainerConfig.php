@@ -6,6 +6,7 @@ namespace MailExport;
 
 use Aura\Di\Container;
 use Aura\Di\ContainerConfig as BaseContainerConfig;
+use MailExport\ConfigLoader\Dotenv;
 use MailExport\ConfigLoader\Getopt;
 use MailExport\ConfigLoader\PhpArray;
 use MailExport\Mailbox\Imap;
@@ -39,6 +40,7 @@ class ContainerConfig extends BaseContainerConfig
                 Config::class,
                 [[
                     $di->newInstance(PhpArray::class, [__DIR__ . '/../config.php']),
+                    $di->newInstance(Dotenv::class, [__DIR__ . '/../']),
                     $di->newInstance(Getopt::class)
                 ]]
             );
