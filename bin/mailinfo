@@ -1,0 +1,29 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Aura\Di\ContainerBuilder;
+use MailExport\ContainerConfig;
+
+$di = (new ContainerBuilder())->newConfiguredInstance(
+    [ContainerConfig::class],
+    ContainerBuilder::AUTO_RESOLVE
+);
+
+$verbose = isset($argv[1]) && $argv[1] == '-v';
+
+$mailbox = $di->get('mailbox');
+$mailbox->open();
+$mailboxes = $mailbox->getMailboxes();
+foreach ($mailboxes as $mbox) {
+    echo $mbox . PHP_EOL;
+    if ($verbose) {
+        $info = $mailbox->getMailboxStatus($mbox);
+        foreach ($info as $key => $value) {
+            echo " $key: $value" . PHP_EOL;
+        }
+        echo PHP_EOL;
+    }
+}
+$mailbox->close();
